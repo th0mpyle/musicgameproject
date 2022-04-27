@@ -39,6 +39,7 @@ def ask(song):
             continue
     hidden_name = ''.join(song_arr)
     print(hidden_name)
+    print('')
 
 
 def compare(user_input, song):
@@ -52,14 +53,14 @@ def compare(user_input, song):
 
 if __name__ == '__main__':
     print("Loaded!")
-    print('Welcome! Make sure to add apostrophes and spell right.')
+    print('Welcome! Make sure to add apostrophes and spell right.\n')
     time.sleep(1)
     song_data = find_data(songs)
     ask(song_data)
     guess = input("Guess: ")
     result = compare(guess, song_data)
     if result == 1:
-        print('Correct!')
+        print('\nCorrect!')
     elif result == 2:
-        print('Incorrect!')
+        print('\nIncorrect!')
 
