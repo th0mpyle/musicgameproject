@@ -22,16 +22,18 @@ def auth(password_arr):
         if entered_user in dictionary:
             entered_pass = input("Password: ")
             if dictionary[entered_user] == entered_pass:
-                print('Authorised!')
+                print('Authorised!\n')
                 break
             else:
                 print('Incorrect password')
         else:
             print("Incorrect username")
+    data = [entered_user, entered_pass]
+    return data
 
 
 def find_data(song_list):
-    index = song_list[random.randint(0, len(song_list))]
+    index = song_list[random.randint(0, len(song_list) - 1)]
     index = index.split('/')
 
     song = index[0]
@@ -71,18 +73,34 @@ def compare(user_input, song):
 
 
 if __name__ == '__main__':
-    auth(passwords)
+
+    user_info = auth(passwords)
+    print(user_info)
     print("Loaded!")
-    print('Welcome! Make sure to add apostrophes and spell right.')
+    print('Welcome! Make sure to spell right.\n')
     time.sleep(1)
 
-    song_data = find_data(songs)
-    ask(song_data)
+    lives = 3
+    lives_output = ['♥', '♥', '♥']
+    score = 0
 
-    guess = input("Guess: ")
-
-    result = compare(guess, song_data)
-    if result == 1:
-        print('Correct!')
-    elif result == 2:
-        print('Incorrect!')
+    while True:
+        print('-'.join(lives_output))
+        song_data = find_data(songs)
+        ask(song_data)
+        guess = input("Guess: ")
+        result = compare(guess, song_data)
+        if result == 1:
+            print('Correct!\n')
+            score += 1
+            time.sleep(0.5)
+        elif result == 2:
+            temp_song = song_data['song']
+            print(f'Incorrect! It was {temp_song}.\n')
+            time.sleep(1)
+            lives -= 1
+            lives_output[lives] = '♡'
+            if lives == 0:
+                print("Out of lives!")
+                print(f'Your score was {score}')
+                break
