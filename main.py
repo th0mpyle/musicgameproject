@@ -8,6 +8,7 @@ songs = open('songs.txt', 'r').readlines()
 passwords = open('passwords.txt', 'r').readlines()
 
 
+
 def auth(password_arr):
     dictionary = {}
     for i in range(len(password_arr)):
@@ -53,13 +54,14 @@ def ask(song):
     print(f'Artist: {artist}')
     song_name = song['song']
     song_arr = list(song_name)
+    flag = 0
     for i in range(len(song_arr)):
-        if i == 0:
-            continue
+        if i == 0 or flag == 1:
+            flag = 0
         elif song_arr[i] != " ":
             song_arr[i] = "_"
-        else:
-            continue
+        elif song_arr[i] == " ":
+            flag = 1
     hidden_name = ''.join(song_arr)
     print(hidden_name)
 
@@ -85,22 +87,36 @@ if __name__ == '__main__':
     score = 0
 
     while True:
+
         print('-'.join(lives_output))
         song_data = find_data(songs)
         ask(song_data)
         guess = input("Guess: ")
         result = compare(guess, song_data)
+
         if result == 1:
             print('Correct!\n')
-            score += 1
+            score += 3
             time.sleep(0.5)
         elif result == 2:
-            temp_song = song_data['song']
-            print(f'Incorrect! It was {temp_song}.\n')
-            time.sleep(1)
-            lives -= 1
-            lives_output[lives] = '♡'
-            if lives == 0:
-                print("Out of lives!")
-                print(f'Your score was {score}')
-                break
+            print(f'Incorrect! Try again.\n')
+            time.sleep(0.3)
+            ask(song_data)
+            guess = input("Guess: ")
+            result = compare(guess, song_data)
+
+            if result == 1:
+                print("Correct!\n")
+                score += 1
+                time.sleep(0.5)
+            elif result == 2:
+                temp_song = song_data['song']
+                print(f'Incorrect! The answer was {temp_song}.\n')
+                lives -= 1
+                lives_output[lives] = '♡'
+                time.sleep(0.5)
+        if lives == 0:
+            print("Out of lives!")
+            print(f'Your scored {score}!\n')
+            break
+
