@@ -8,7 +8,6 @@ songs = open('songs.txt', 'r').readlines()
 passwords = open('passwords.txt', 'r').readlines()
 
 
-
 def auth(password_arr):
     dictionary = {}
     for i in range(len(password_arr)):
@@ -31,6 +30,37 @@ def auth(password_arr):
             print("Incorrect username")
     data = [entered_user, entered_pass]
     return data
+
+
+def leaderboard_function(user_score, current_username):
+    f = open('leaderboard.txt', 'r+')
+    leaderboard = f.readlines()
+
+    score_dict = {}
+
+    for i in range(len(leaderboard)):
+        index = leaderboard[i]
+        index = index.split('/')
+        user = index[0]
+        past_score = index[1]
+        past_score = str(past_score)
+        past_score = past_score[0:len(past_score) - 1]
+        past_score = int(past_score)
+        score_dict[user] = past_score
+    score_dict[current_username] = user_score
+
+    sort_scored = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)
+    print(sort_scored)
+
+    f.seek(0)
+    f.truncate(0)
+
+    for i in sort_scored:
+        # ERROR - string needs casting
+        entry = (i[0] + '/' + i[1] + "\n")
+        f.write(entry)
+
+    f.close()
 
 
 def find_data(song_list):
@@ -77,7 +107,7 @@ def compare(user_input, song):
 if __name__ == '__main__':
 
     user_info = auth(passwords)
-    print(user_info)
+    user_first = user_info[0]
     print("Loaded!")
     print('Welcome! Make sure to spell right.\n')
     time.sleep(1)
@@ -118,5 +148,5 @@ if __name__ == '__main__':
         if lives == 0:
             print("Out of lives!")
             print(f'Your scored {score}!\n')
+            leaderboard_function(score, user_first)
             break
-
