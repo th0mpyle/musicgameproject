@@ -51,13 +51,14 @@ def leaderboard_function(user_score, current_username):
 
     sort_scored = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)
     print(sort_scored)
-
     f.seek(0)
     f.truncate(0)
-
-    for i in sort_scored:
+    sort_scored_len = list(sort_scored)
+    for h in sort_scored_len:
         # ERROR - string needs casting
-        entry = (i[0] + '/' + i[1] + "\n")
+        arg1 = h[0]
+        arg2 = h[1]
+        entry = (str(arg1) + '/' + str(arg2) + "\n")
         f.write(entry)
 
     f.close()
@@ -149,4 +150,15 @@ if __name__ == '__main__':
             print("Out of lives!")
             print(f'Your scored {score}!\n')
             leaderboard_function(score, user_first)
+            file = open('leaderboard.txt', 'r').readlines()
+            print("Top scorers:\n")
+
+            for j in range(len(file)):
+                if j < 5:
+                    dex = file[j]
+                    dex = dex.split('/')
+                    finished_user = dex[0]
+                    finished_score = dex[1]
+                    finished_score = finished_score[0:len(finished_score) - 1]
+                    print(str(finished_user) + ' - ' + str(finished_score))
             break
