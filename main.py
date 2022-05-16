@@ -55,7 +55,6 @@ def leaderboard_function(user_score, current_username):
     f.truncate(0)
     sort_scored_len = list(sort_scored)
     for h in sort_scored_len:
-        # ERROR - string needs casting
         arg1 = h[0]
         arg2 = h[1]
         entry = (str(arg1) + '/' + str(arg2) + "\n")
