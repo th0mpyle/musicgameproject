@@ -1,1 +1,10 @@
+
 this is not to be used on here and only serves the purpose of showing that i've added a leaderboard lol
+
+if you want to test this functionality here are some test values:
+-----------
+guest2/23
+guest1/50
+guest3/12
+-----------
+the program will sort these itself.
