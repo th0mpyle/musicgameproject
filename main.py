@@ -138,41 +138,43 @@ if __name__ == '__main__':
         result = compare(guess, song_data)  # compare input and song name
 
         if result == 1:  # if answer matches
-            print('Correct!\n')
-            score += 3
-            time.sleep(1)
+            print('Correct!\n')  # output correct
+            score += 3  # add 3 pointer
+            time.sleep(1)  # wait for next question
 
-        elif result == 2:
-            print(f'Incorrect! Try again.\n')
-            ask(song_data)
-            guess = input("Guess: ")
-            result = compare(guess, song_data)
+        elif result == 2:  # if result doesn't match the first time around
+            print('Incorrect! Try again.\n')  # if output incorrect, ask user to repeat
+            ask(song_data)  # re-ask the question
+            guess = input("Guess: ")  # ask for an input
+            result = compare(guess, song_data)  # compare again
 
-            if result == 1:
+            if result == 1:  # if correct this time around
                 print("Correct!\n")
-                score += 1
+                score += 1  # only add one point
                 time.sleep(1)
 
             elif result == 2:
-                temp_song = song_data['song']
-                print(f'Incorrect! The answer was {temp_song}.\n')
-                lives -= 1
-                lives_output[lives] = '♡'
+                temp_song = song_data['song']  # save the song into a temporary arg
+                print(f'Incorrect! The answer was {temp_song}.\n')  # tell the user the answer
+                lives -= 1  # take away a numerical life
+                lives_output[lives] = '♡'  # replace one life with an empty heart
                 time.sleep(1)
 
         if lives == 0:
-            print("Out of lives!")
-            print(f'Your scored {score}!\n')
-            leaderboard_function(score, user_first)
-            file = open('leaderboard.txt', 'r').readlines()
+            print("Game over!")  # game over
+            print(f'Your scored {score}!\n')  # output score
+            leaderboard_function(score, user_first)  # call leaderboard function
+            file = open('leaderboard.txt', 'r').readlines()  # open the new leaderboard 
             print("Top scorers:\n")
 
-            for j in range(len(file)):
-                if j < 5:
-                    dex = file[j]
-                    dex = dex.split('/')
+            for j in range(len(file)):  # loop through file
+                if j < 5:  # print until 5 (or as many as possible) have been given
+                    dex = file[j] 
+                    dex = dex.split('/')  # split up the string
                     finished_user = dex[0]
                     finished_score = dex[1]
-                    finished_score = finished_score[0:len(finished_score) - 1]
-                    print(str(finished_user) + ' - ' + str(finished_score))
+                    finished_score = finished_score[0:len(finished_score) - 1]  # removes the \n
+                    print(str(finished_user) + ' - ' + str(finished_score))  # print the name concatenated with a dash
             break
+
+# I LOVE COMMENTING CODE SO MUCH
